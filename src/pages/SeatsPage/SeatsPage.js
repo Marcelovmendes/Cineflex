@@ -1,19 +1,26 @@
-
+import { useState,useEffect } from "react"
+import { fetchSeatsList } from "../services"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
-
 export default function SeatsPage() {
+    const [seats,setSeats] = useState([]);
+    const {idSeats} = useParams();
+    console.log(seats)
+    useEffect(()=>{
+        fetchSeatsList(idSeats)
+        .then((res) =>{setSeats(res.data);  console.log(res.data)})
+        .catch((err) => console.log(err.response.data))
+    },[idSeats])
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
+         
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                { seats.seats? (seats.seats.map((s)=>(
+                  <SeatItem key={s.id}>{s.name}</SeatItem>  
+                ))): (<p>Carregando...</p>)}  
             </SeatsContainer>
 
             <CaptionContainer>
@@ -40,14 +47,13 @@ export default function SeatsPage() {
 
                 <button>Reservar Assento(s)</button>
             </FormContainer>
-
-            <FooterContainer>
+         <FooterContainer data-test="footer" >
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={seats.movie? seats.movie.posterURL: ""} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{seats.movie? seats.movie.title: ""}</p>
+                    <p>{seats.movie? ( seats.day.weekday) : ""} - {seats.movie? ( seats.name) : ""}</p>
                 </div>
             </FooterContainer>
 

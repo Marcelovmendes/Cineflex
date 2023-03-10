@@ -9,9 +9,9 @@
             return axios.get(url)
         };
 
-        export const fetchSeatsList = () =>{
+        export const fetchSeatsList = (idSeats) =>{
 
-            const url = "https://mock-api.driven.com.br/api/v8/cineflex/showtimes/ID_DA_SESSAO/seats"
+            const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSeats}/seats`
             
           return axios.get(url)
         }
@@ -23,9 +23,9 @@
            return axios.get(url)
         }
 
-        export const postReservationData = (idSeats) =>{
+        export const postReservationData = () =>{
 
-            const url = `https://mock-api.driven.com.br/api/v8/cineflex/${idSeats}/book-many`
+            const url = `https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many`
         
             return axios.post(url)
         }

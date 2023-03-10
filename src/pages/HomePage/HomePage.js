@@ -7,10 +7,7 @@ export default function HomePage() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     fetchMoviesList()
-      .then((res) => {
-        setMovies(res.data);
-        
-      })
+      .then((res) => {setMovies(res.data);})
       .catch((err) => console.log(err.response.data));
   }, []);
 
@@ -21,7 +18,7 @@ export default function HomePage() {
         {movies.map((movie) => (
            <Link key={movie.id} to={`/sessoes/${movie.id}`}>
           <MovieContainer >
-            <img src={movie.posterURL} alt={movie.title} />
+            <div data-test ="movie"><img src={movie.posterURL} alt={movie.title} /></div>
           </MovieContainer>
           </Link> 
         ))}
