@@ -1,10 +1,23 @@
-import styled from "styled-components"
+    import { useEffect, useState } from "react";
+    import { Link, useParams } from "react-router-dom";
+    import styled from "styled-components";
+    import { fetchSessionsList } from "../services";
 
-export default function SessionsPage() {
 
+    export default function SessionsPage() {
+    const [session, setSession] = useState([]);
+    const { idSessions } = useParams();
+    useEffect(() => {
+
+           fetchSessionsList(idSessions)
+            .then((res) => {console.log(res.data); setSession(res.data)})
+            .catch((err)=> console.log(err.response.data))
+    }, []);
+console.log(session.days)
     return (
         <PageContainer>
-            Selecione o horário
+          
+           Selecione o horário
             <div>
                 <SessionContainer>
                     Sexta - 03/03/2023
@@ -13,41 +26,28 @@ export default function SessionsPage() {
                         <button>15:00</button>
                     </ButtonsContainer>
                 </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
             </div>
-
-            <FooterContainer>
-                <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                </div>
-            </FooterContainer>
-
+        <FooterContainer>
+            <div>
+            <img
+                src={
+                "https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"
+                }
+                alt="poster"
+            />
+            </div>
+            <div>
+            <p>Tudo em todo lugar ao mesmo tempo</p>
+            </div>
+        </FooterContainer>
         </PageContainer>
-    )
-}
+    );
+    }
 
-const PageContainer = styled.div`
+    const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 24px;
     text-align: center;
     color: #293845;
@@ -57,17 +57,17 @@ const PageContainer = styled.div`
     div {
         margin-top: 20px;
     }
-`
-const SessionContainer = styled.div`
+    `;
+    const SessionContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 20px;
     color: #293845;
     padding: 0 20px;
-`
-const ButtonsContainer = styled.div`
+    `;
+    const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: row;
     margin: 20px 0;
@@ -77,11 +77,11 @@ const ButtonsContainer = styled.div`
     a {
         text-decoration: none;
     }
-`
-const FooterContainer = styled.div`
+    `;
+    const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
-    background-color: #C3CFD9;
+    background-color: #c3cfd9;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -90,7 +90,7 @@ const FooterContainer = styled.div`
     bottom: 0;
 
     div:nth-child(1) {
-        box-shadow: 0px 2px 4px 2px #0000001A;
+        box-shadow: 0px 2px 4px 2px #0000001a;
         border-radius: 3px;
         display: flex;
         align-items: center;
@@ -98,9 +98,9 @@ const FooterContainer = styled.div`
         background-color: white;
         margin: 12px;
         img {
-            width: 50px;
-            height: 70px;
-            padding: 8px;
+        width: 50px;
+        height: 70px;
+        padding: 8px;
         }
     }
 
@@ -109,10 +109,10 @@ const FooterContainer = styled.div`
         flex-direction: column;
         align-items: flex-start;
         p {
-            text-align: left;
-            &:nth-child(2) {
-                margin-top: 10px;
-            }
+        text-align: left;
+        &:nth-child(2) {
+            margin-top: 10px;
+        }
         }
     }
-`
+    `;
