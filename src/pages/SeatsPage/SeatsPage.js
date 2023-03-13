@@ -13,12 +13,12 @@ export default function SeatsPage() {
   const [cpf, setCpf] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  console.log(selecteSeat)
+  //console.log(selecteSeat)
   useEffect(() => {
     fetchSeatsList(idAssentos)
       .then((res) => {
         setSeats(res.data);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => console.log(err.response.data));
   }, [idAssentos]);
@@ -175,6 +175,11 @@ const FormContainer = styled.div`
   input {
     width: calc(100vw - 60px);
   }
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 `;
 const CaptionContainer = styled.div`
   display: flex;
