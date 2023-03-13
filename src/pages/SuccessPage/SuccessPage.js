@@ -15,11 +15,11 @@ export default function SuccessPage() {
         <strong>
           <p>Filme e sessão</p>
         </strong>
-        <p data-test="movie-info">{data.movieTitle}</p>
-        <p data-test="movie-info">{data.sessionDate}</p>
+        <p>{data.movieTitle}</p>
+        <p>{data.sessionDate}</p>
       </TextContainer>
 
-      <TextContainer data-test="sats-info">
+      <TextContainer data-test="seats-info">
         <strong>
           <p>Ingressos</p>
         </strong>
