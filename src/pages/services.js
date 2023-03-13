@@ -13,7 +13,6 @@ export const fetchSeatsList = (idAssentos) => {
 
 export const fetchSessionsList = (idSessao) => {
   const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idSessao}/showtimes`;
-
   return axios.get(url);
 };
 

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchMoviesList } from "../services";
-import  ReactLoading from 'react-loading';
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
@@ -23,9 +22,7 @@ export default function HomePage() {
           </MovieContainer>
           </Link> 
         ))): (
-          <LoadingHome>
-            <ReactLoading type="spin" color="orange" height={600} width={350}/>
-          </LoadingHome>
+     <p>Carregando...</p>
         ) }
       </ListContainer>
     </PageContainer>

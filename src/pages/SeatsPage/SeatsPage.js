@@ -11,11 +11,11 @@
     const [cpf, setCpf] = useState("");
     const [name, setName] = useState("");
     const navigate = useNavigate();
-    console.log(selecteSeat)
     useEffect(() => {
         fetchSeatsList(idAssentos)
         .then((res) => {
             setSeats(res.data);
+            console.log(res.data)
         })
         .catch((err) => console.log(err.response.data));
     }, [idAssentos]);

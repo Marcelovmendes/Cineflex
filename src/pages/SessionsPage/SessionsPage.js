@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchSessionsList } from "../services";
-import  ReactLoading from 'react-loading';
 
 export default function SessionsPage() {
   const [session, setSession] = useState([]);
@@ -37,9 +36,7 @@ export default function SessionsPage() {
             </SessionContainer>
           </div>
         ))
-      ) : ( <LoadingSessions>
-        <ReactLoading type="spin" color="orange" height={300} width={175}/>
-      </LoadingSessions>
+      ) : ( <p>Carregando...</p>
       )}
        
       <div data-test="footer">
