@@ -21,9 +21,9 @@ export default function SessionsPage() {
       Selecione o horário
       {session.days ? (
         session.days.map((d) => (
-          <div key={d.id}>
+          <div data-test="movie-day" key={d.id}>
             <SessionContainer>
-              <div data-test="movie-day">
+              <div>
                 {d.weekday} - {d.date}
               </div>
               <ButtonsContainer>
