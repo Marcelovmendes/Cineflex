@@ -81,7 +81,7 @@
             <input type="text" required value={name} onChange={(e)=>setName(e.target.value)} placeholder="Digite seu nome..."  data-test="client-name"/>
         <label htmlFor="cpf">CPF do comprador:</label>
             <input type="number"  required value={cpf} onChange={(e)=>setCpf(e.target.value)} placeholder="Digite seu CPF..." data-test="client-cpf" />
-            <button data-test="book-btn" type="submit">Reservar Assento(s)</button>
+            <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
             </form>
         </FormContainer>
         <FooterContainer data-test="footer">
