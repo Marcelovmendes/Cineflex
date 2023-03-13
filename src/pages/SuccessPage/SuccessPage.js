@@ -4,7 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 export default function SuccessPage() {
   const location = useLocation();
   const data = location.state.data;
-  const formattedCPF = data.clientCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1-$2-$3-$4");
+  const formattedCPF = data.clientCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  console.log(data)
   return (
     <PageContainer>
       <h1>

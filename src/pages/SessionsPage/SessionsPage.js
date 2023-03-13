@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchSessionsList } from "../services";
+import ReactLoading from 'react-loading';
 
 export default function SessionsPage() {
   const [session, setSession] = useState([]);
   const { idSessao } = useParams();
-  console.log(idSessao)
   useEffect(() => {
     fetchSessionsList(idSessao)
       .then((res) => {
@@ -36,7 +36,9 @@ export default function SessionsPage() {
             </SessionContainer>
           </div>
         ))
-      ) : ( <p>Carregando...</p>
+      ) : (<LoadingSessions>
+         <ReactLoading type="spin" color="orange" height={500} width={325}/>
+      </LoadingSessions>
       )}
        
       <div data-test="footer">
@@ -133,6 +135,6 @@ const FooterContainer = styled.div`
 const LoadingSessions = styled.div`
 display: flex;
 justify-content: center;
-height: 750px;
+height: 600px;
 width: 400px;
 `
