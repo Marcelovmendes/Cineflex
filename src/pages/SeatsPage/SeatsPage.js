@@ -1,105 +1,104 @@
-import { useState, useEffect } from "react";
-import { fetchSeatsList } from "../services";
-import { Navigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
+    import { useState, useEffect } from "react";
+    import { fetchSeatsList } from "../services";
+    import { useNavigate, useParams } from "react-router-dom";
+    import styled from "styled-components";
+    import { postReservationData } from "../services";
 
-export default function SeatsPage() {
-  const [seats, setSeats] = useState([]);
-  const [selecteSeat, setSelecteSeat] = useState([]);
-  const { idAssentos } = useParams();
-  const [cpf, setCpf] = useState("");
-  const [name, setName] = useState("");
-  console.log(idAssentos)
-  useEffect(() => {
-    fetchSeatsList(idAssentos)
-      .then((res) => {
-        setSeats(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err.response.data));
-  }, [idAssentos]);
+    export default function SeatsPage() {
+    const [seats, setSeats] = useState([]);
+    const [selecteSeat, setSelecteSeat] = useState([]);
+    const { idAssentos } = useParams();
+    const [cpf, setCpf] = useState("");
+    const [name, setName] = useState("");
+    const navigate = useNavigate();
+    console.log(selecteSeat)
+    useEffect(() => {
+        fetchSeatsList(idAssentos)
+        .then((res) => {
+            setSeats(res.data);
+        })
+        .catch((err) => console.log(err.response.data));
+    }, [idAssentos]);
 
-  const handleIsSelected = (seat) => {
-    if (seat.isAvailable) {
-      setSelecteSeat([...selecteSeat, seat.id]);
-    } else {
-      alert("Aseento indisponivel");
-    }
-  };
-
-  const selectedSeats = (e) => {
-    e.preventDefault();
-    const body = {
-      movieTitle: seats.movie.title,
-      sessionDate: `${seats.day.weekday} - ${seats.name}`,
-      selectedSeats: selecteSeat,
-      userName: name,
-      clientCPF: cpf,
+    const handleIsSelected = (seat) => {
+        if (seat.isAvailable) {
+        setSelecteSeat([...selecteSeat, seat.id]);
+        } else {
+        alert("Aseento indisponivel");
+        }   
     };
-    let ids = selecteSeat
-        const request = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",{ids,name,cpf} )
-          request.then(()=>Navigate("/sucesso",{state: {dados: body}}))
-          request.catch((err) => console.log(err.response.data))
-    }
 
-  return (
-    <PageContainer>
-      Selecione o(s) assento(s)
-      <SeatsContainer>
-        {seats.seats ? (
-          seats.seats.map((s) => (
-            <SeatItem
-            data-test="seat"
-              key={s.id}
-              isAvailable={s.isAvailable}
-              isSelected={selecteSeat.includes(s.id)}
-            >
-              <div onClick={() => handleIsSelected(s)}>{s.name}</div>
-            </SeatItem>
-          ))
-        ) : (
-          <p>Carregando...</p>
-        )}
-      </SeatsContainer>
-      <CaptionContainer>
-        <CaptionItem>
-          <CaptionCircle isSelected />
-          Selecionado
-        </CaptionItem>
-        <CaptionItem>
-          <CaptionCircle isAvailable />
-          Disponível
-        </CaptionItem>
-        <CaptionItem>
-          <CaptionCircle />
-          Indisponível
-        </CaptionItem>
-      </CaptionContainer>
-      <FormContainer>
-        <form onSubmit={selectedSeats}>
-       <label htmlFor="name"> Nome do Comprador:</label>
-        <input type="text" required value={name} onChange={(e)=>setName(e.target.value)} placeholder="Digite seu nome..."  data-test="client-name"/>
-       <label htmlFor="cpf">CPF do comprador:</label>
-        <input type="number"  required value={cpf} onChange={(e)=>setCpf(e.target.value)} placeholder="Digite seu CPF..." data-test="client-cpf" />
-        <button data-test="book-btn" type="submit">Reservar Assento(s)</button>
-        </form>
-      </FormContainer>
-      <FooterContainer data-test="footer">
-        <div>
-          <img src={seats.movie ? seats.movie.posterURL : ""} alt="poster" />
-        </div>
-        <div>
-          <p>{seats.movie ? seats.movie.title : ""}</p>
-          <p>
-            {seats.movie ? seats.day.weekday : ""} -
-            {seats.movie ? seats.name : ""}
-          </p>
-        </div>
-      </FooterContainer>
-    </PageContainer>
-  );
-}
+    const selectedSeats = (e) => {
+        e.preventDefault();
+        const body = {
+        movieTitle: seats.movie.title,
+        sessionDate: `${seats.day.weekday} - ${seats.name}`,
+        selectedSeats: selecteSeat,
+        userName: name,
+        clientCPF: cpf,
+        };
+        let ids = selecteSeat
+        postReservationData(ids, name, cpf)
+        .then(()=> navigate("/sucesso",{state:{data:body}}));
+        }
+
+    return (
+        <PageContainer>
+        Selecione o(s) assento(s)
+        <SeatsContainer>
+            {seats.seats ? (
+            seats.seats.map((s) => (
+                <SeatItem
+                data-test="seat"
+                key={s.id}
+                isAvailable={s.isAvailable}
+                isSelected={selecteSeat.includes(s.id)}
+                >
+                <div onClick={() => handleIsSelected(s)}>{s.name}</div>
+                </SeatItem>
+            ))
+            ) : (
+            <p>Carregando...</p>
+            )}
+        </SeatsContainer>
+        <CaptionContainer>
+            <CaptionItem>
+            <CaptionCircle isSelected />
+            Selecionado
+            </CaptionItem>
+            <CaptionItem>
+            <CaptionCircle isAvailable />
+            Disponível
+            </CaptionItem>
+            <CaptionItem>
+            <CaptionCircle />
+            Indisponível
+            </CaptionItem>
+        </CaptionContainer>
+        <FormContainer>
+            <form onSubmit={selectedSeats}>
+        <label htmlFor="name"> Nome do Comprador:</label>
+            <input type="text" required value={name} onChange={(e)=>setName(e.target.value)} placeholder="Digite seu nome..."  data-test="client-name"/>
+        <label htmlFor="cpf">CPF do comprador:</label>
+            <input type="number"  required value={cpf} onChange={(e)=>setCpf(e.target.value)} placeholder="Digite seu CPF..." data-test="client-cpf" />
+            <button data-test="book-btn" type="submit">Reservar Assento(s)</button>
+            </form>
+        </FormContainer>
+        <FooterContainer data-test="footer">
+            <div>
+            <img src={seats.movie ? seats.movie.posterURL : ""} alt="poster" />
+            </div>
+            <div>
+            <p>{seats.movie ? seats.movie.title : ""}</p>
+            <p>
+                {seats.movie ? seats.day.weekday : ""} -
+                {seats.movie ? seats.name : ""}
+            </p>
+            </div>
+        </FooterContainer>
+        </PageContainer>
+    );
+    }
 function getSeatColor(isAvailable, isSelected) {
   if (!isAvailable) {
     return "#FBE192";
