@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchSessionsList } from "../services";
+import  ReactLoading from 'react-loading';
 
 export default function SessionsPage() {
   const [session, setSession] = useState([]);
-  const { idSessions } = useParams();
+  const { idSessao } = useParams();
+  console.log(idSessao)
   useEffect(() => {
-    fetchSessionsList(idSessions)
+    fetchSessionsList(idSessao)
       .then((res) => {
         //console.log(res.data);
         setSession(res.data);
       })
       .catch((err) => console.log(err.response.data));
-  }, [idSessions]);
+  }, [idSessao]);
  // console.log(session.days);
   return (
     <PageContainer>
@@ -35,19 +37,20 @@ export default function SessionsPage() {
             </SessionContainer>
           </div>
         ))
-      ) : (
-        <p>Carregando...</p>
+      ) : ( <LoadingSessions>
+        <ReactLoading type="spin" color="orange" height={300} width={175}/>
+      </LoadingSessions>
       )}
        
       <div data-test="footer">
       <FooterContainer >
-        <div>
+        <div data-test="footer">
           <img
             src={session.posterURL} 
             alt="poster"
           />
         </div>
-        <div>
+        <div data-test="footer"> 
           <p>{session.title}</p>
         </div>
       </FooterContainer>
@@ -129,3 +132,10 @@ const FooterContainer = styled.div`
     }
   }
 `;
+
+const LoadingSessions = styled.div`
+display: flex;
+justify-content: center;
+height: 750px;
+width: 400px;
+`

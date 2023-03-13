@@ -12,9 +12,9 @@
 
             <Routes>
             <Route path="/" element={<HomePage/>}/> 
-            <Route path="/assentos/:idSeats" element={ <SeatsPage />}/>
-                <Route path="/sessoes/:idSessions" element={<SessionsPage/>} />
-                <Route path="/sucesso" element={<SuccessPage />}/>            
+            <Route path="/assentos/:idAssentos" element={ <SeatsPage />}/>
+            <Route path="/sessoes/:idSessao" element={<SessionsPage/>} />
+            <Route path="/sucesso" element={<SuccessPage />}/>            
             </Routes>
             </BrowserRouter>
         )

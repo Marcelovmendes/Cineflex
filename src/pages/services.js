@@ -9,23 +9,15 @@
             return axios.get(url)
         };
 
-        export const fetchSeatsList = (idSeats) =>{
+        export const fetchSeatsList = (idAssentos) =>{
 
-            const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSeats}/seats`
-            
+            const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idAssentos}/seats`
           return axios.get(url)
         }
 
-        export const fetchSessionsList = (idSessions) =>{
+        export const fetchSessionsList = (idSessao) =>{
 
-            const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idSessions}/showtimes`
+            const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idSessao}/showtimes`
 
            return axios.get(url)
-        }
-
-        export const postReservationData = () =>{
-
-            const url = `https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many`
-        
-            return axios.post(url)
         }
